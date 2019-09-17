@@ -98,3 +98,37 @@ let rec split_sum l f =
                     if f hd then helper tl f (s1+hd, s2)
                     else helper tl f (s1, s2+hd)
     in helper l f (0, 0);;
+
+(* Question 15 *)
+let rec concat s list =
+    let rec helper s list res =
+        match list with
+        | [] -> res
+        | [x] -> res ^ x
+        | hd::tl -> helper s tl (res ^ hd ^ " " ^ s ^ " ")
+    in helper s list "";;
+
+(* Question 16 *)
+let even_count_fr_base = 0;;
+let even_count_fr_rec x rec_val =
+    if (x mod 2) == 0 then 1 + rec_val else rec_val;;
+
+(* Question 17 *)
+let pair_sums_map_arg p =
+    let (x, y) = p in x + y;;
+
+(* Question 18 *)
+let remove_even_base = [];;
+let remove_even_rec n r = if (n mod 2) = 0 then r else n::r;;
+
+(* Question 19 *)
+let even_count_tr_start = 0;;
+let even_count_tr_step acc_val x =
+    if (x mod 2) = 0 then acc_val + 1
+    else acc_val;;
+
+(* Question 20 *)
+let split_sum_start = (0, 0);;
+let split_sum_step f p i =
+    let (x, y) = p in
+    if f i then (x+i, y) else (x, y+i);;
