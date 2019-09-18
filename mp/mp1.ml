@@ -37,7 +37,9 @@ let rec sub_list l1 l2 =
 let rec even_count_fr l =
     match l with
     | [] -> 0
-    | hd::tl -> ((hd + 1) mod 2) + even_count_fr tl;;
+    | hd::tl -> let res = even_count_fr tl in
+                if hd mod 2 = 0 then 1 + res
+                else res;;
 
 (* Question 7 *)
 let rec pair_sums l =
@@ -49,8 +51,9 @@ let rec pair_sums l =
 let rec remove_even list =
     match list with
     | [] -> []
-    | hd::tl -> if (hd mod 2) = 0 then remove_even tl
-                else hd :: remove_even tl;;
+    | hd::tl -> let res = remove_even tl in
+                if (hd mod 2) = 0 then res
+                else hd :: res;;
 
 (* Question 9 *)
 let rec sift p l =
@@ -71,7 +74,8 @@ let rec even_count_tr l =
     let rec helper l sum =
         match l with
         | [] -> sum
-        | hd::tl -> helper tl (sum + ((hd + 1) mod 2))
+        | hd::tl -> if (hd mod 2) = 0 then helper tl (sum + 1)
+                    else helper tl sum
     in helper l 0;;
 
 (* Question 12 *)
@@ -105,13 +109,13 @@ let rec concat s list =
         match list with
         | [] -> res
         | [x] -> res ^ x
-        | hd::tl -> helper s tl (res ^ hd ^ " " ^ s ^ " ")
+        | hd::tl -> helper s tl (res ^ hd ^ s)
     in helper s list "";;
 
 (* Question 16 *)
 let even_count_fr_base = 0;;
 let even_count_fr_rec x rec_val =
-    if (x mod 2) == 0 then 1 + rec_val else rec_val;;
+    if (x mod 2) = 0 then 1 + rec_val else rec_val;;
 
 (* Question 17 *)
 let pair_sums_map_arg p =
