@@ -25,7 +25,18 @@ let shiftk (s, q) k =
         (fun d -> concatk (s, d)
         (fun e -> concatk (e, s) k)))));;
 
+(* Take care of the evaluation order *)
+let quadk (a, b, c) k =
+    mulk (4, b)
+        (fun r -> mulk (a, a)
+        (fun l -> mulk (2, l)
+        (fun m -> addk (m, r)
+        (fun n -> addk (n, c) k))));;
+
+
 (* Question 3 *)
+
+(* Only use forward recursion *)
 let rec even_count l =
     match l with
     | [] -> 0
@@ -58,6 +69,16 @@ let rec all_positivek l k =
             (fun a -> 
                 if a then all_positivek xs k
                 else k false);;
+
+let rec list_prod l =
+    match l with
+    | [] -> 1
+    | x::xs -> x * list_prod xs;;
+
+let rec list_prodk l k =
+    match l with
+    | [] -> k 1
+    | x::xs -> list_prodk xs (fun r -> mulk (x, r) k);;
 
 (* Question 4 *)
 let rec find_all (p, l) =
