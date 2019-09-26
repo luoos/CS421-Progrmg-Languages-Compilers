@@ -58,17 +58,17 @@ let rec even_countk l k =
 let rec all_positive l =
     match l with
     | [] -> true
-    | x::xs -> if x >= 0 then all_positive xs
-               else false;;
+    | x::xs -> if 0 >= x then false
+               else all_positive xs;;
 
 let rec all_positivek l k =
     match l with
     | [] -> k true
     | x::xs ->
-        geqk (x, 0)
+        geqk (0, x)
             (fun a -> 
-                if a then all_positivek xs k
-                else k false);;
+                if a then k false
+                else all_positivek xs k);;
 
 let rec list_prod l =
     match l with
