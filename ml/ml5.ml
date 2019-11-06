@@ -75,9 +75,9 @@ rule token = parse
   | "rec"   { REC }
   | "fun"   { FUN }
   | "raise" { RAISE }
- 
-  | ("0b" [ '0' '1']+) as s { INT (int_of_string s) }
-  | ("0x" [  '0'-'9' 'a'-'f']+) as s { INT (int_of_string s) }
+
+  | ("0b" [ '0' '1' ]+) as s { INT (int_of_string s) }
+  | ("0x" [ '0'-'9' 'a'-'f' ]+) as s { INT (int_of_string s) }
   | (lowercase(iden_c*)) as s { IDENT s }
 
   | "\"" { STRING (handle_string lexbuf) }
@@ -91,15 +91,15 @@ and handle_string = parse
   | "\\t"                       { "\t" ^ (handle_string lexbuf) }
   | "\\" (((numeric) (numeric) (numeric)) as value ) { (String.make 1 (char_of_int(int_of_string value))) ^ (handle_string lexbuf) }
   | "\\ "                       { " " ^ (handle_string lexbuf) }
-  | "\\\n" [' ' '\t']*          { handle_string lexbuf }
-  
+  | "\\\n" [ ' ' '\t' ]*        { handle_string lexbuf }
+
 
 {(* do not modify this function: *)
  let lextest s = token (Lexing.from_string s)
 
  let get_all_tokens s =
      let b = Lexing.from_string (s^"\n") in
-     let rec g () = 
+     let rec g () =
      match token b with EOF -> []
      | t -> t :: g () in
      g ()
